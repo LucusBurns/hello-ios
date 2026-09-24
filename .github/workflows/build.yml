@@ -1,0 +1,21 @@
+name: Build iOS app
+on: push
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: brew install xcodegen
+      - run: xcodegen generate
+      - run: |
+          xcodebuild -project HelloIOS.xcodeproj -scheme HelloIOS \
+            -configuration Release -sdk iphoneos -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+      - run: |
+          mkdir Payload
+          cp -r build/Build/Products/Release-iphoneos/HelloIOS.app Payload/
+          zip -r HelloIOS.ipa Payload
+      - uses: actions/upload-artifact@v6
+        with:
+          name: HelloIOS-ipa
+          path: HelloIOS.ipa
