@@ -11,3 +11,4 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       INFOPLIST_KEY_UILaunchScreen_Generation: YES
       PRODUCT_BUNDLE_IDENTIFIER: com.example.helloios
+      CODE_SIGN_ENTITLEMENTS: HelloIOS/HelloIOS.entitlements
